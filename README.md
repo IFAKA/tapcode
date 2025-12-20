@@ -1,3 +1,5 @@
+<img width="1280" height="640" alt="image" src="https://github.com/user-attachments/assets/da73ade2-7934-4153-b4b4-ddc072d07324" />
+
 # TapCode
 
 Touch-focused web IDE for mobile development.
