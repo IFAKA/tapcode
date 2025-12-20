@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TapCode Banner</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a0a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .banner {
+      width: 1280px;
+      height: 640px;
+      background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a0a0a 100%);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Glow effects */
+    .glow-1 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+      top: -150px;
+      left: -100px;
+    }
+
+    .glow-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
+      bottom: -100px;
+      right: 100px;
+    }
+
+    .glow-3 {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+      top: 50%;
+      right: 20%;
+      transform: translateY(-50%);
+    }
+
+    /* Content container */
+    .content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      height: 100%;
+      padding: 60px;
+    }
+
+    /* Left side - branding */
+    .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .logo-icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+      position: relative;
+    }
+
+    .logo-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: white;
+    }
+
+    .title {
+      font-size: 64px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -3px;
+    }
+
+    .tagline {
+      font-size: 22px;
+      color: #6b7280;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .tagline strong {
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    /* Description box */
+    .desc-box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+
+    .desc-label {
+      font-size: 11px;
+      color: #3b82f6;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .desc-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .desc-text .highlight {
+      color: #60a5fa;
+    }
+
+    /* Features */
+    .features {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      font-size: 12px;
+      color: #9ca3af;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .feature.primary {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+    }
+
+    /* Right side - phone preview */
+    .right {
+      width: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 40px;
+    }
+
+    .phone {
+      background: #0f0f0f;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      padding: 8px;
+    }
+
+    .phone-screen {
+      background: #1a1a1a;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .phone-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .file-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .file-tab {
+      padding: 6px 12px;
+      background: rgba(59, 130, 246, 0.15);
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #60a5fa;
+    }
+
+    .file-tab.inactive {
+      background: transparent;
+      color: #6b7280;
+    }
+
+    .phone-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .action-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: #6b7280;
+    }
+
+    .phone-body {
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      min-height: 200px;
+    }
+
+    .code-line {
+      display: flex;
+    }
+
+    .line-num {
+      color: #4b5563;
+      width: 24px;
+      text-align: right;
+      margin-right: 12px;
+      user-select: none;
+    }
+
+    .keyword {
+      color: #c084fc;
+    }
+
+    .tag {
+      color: #f472b6;
+    }
+
+    .attr {
+      color: #60a5fa;
+    }
+
+    .string {
+      color: #4ade80;
+    }
+
+    .text {
+      color: #e5e7eb;
+    }
+
+    .comment {
+      color: #4b5563;
+    }
+
+    .phone-footer {
+      display: flex;
+      justify-content: center;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .cmd-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #4b5563;
+    }
+
+    .cmd-key {
+      padding: 4px 8px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 4px;
+      color: #60a5fa;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+    }
+
+    /* Badge */
+    .badge {
+      position: absolute;
+      top: 40px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .badge-icon {
+      font-size: 16px;
+    }
+
+    /* Bottom text */
+    .bottom-text {
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .tech-item {
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      font-size: 11px;
+      color: #4b5563;
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <!-- Background effects -->
+    <div class="grid-bg"></div>
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+    <div class="glow-3"></div>
+
+    <!-- Badge -->
+    <div class="badge">
+      <span class="badge-icon">&#128241;</span>
+      <span>Mobile-first</span>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="left">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" transform="rotate(180 12 12)"/>
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 6v2M12 16v2M6 12h2M16 12h2" stroke="white" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <span class="title">TapCode</span>
+        </div>
+
+        <p class="tagline">
+          <strong>Touch-focused web IDE.</strong> Code on mobile<br>
+          with Monaco Editor, auto-save, and live preview.
+        </p>
+
+        <div class="desc-box">
+          <div class="desc-label">Built for mobile development</div>
+          <div class="desc-text">
+            <span class="highlight">One screen philosophy</span> - Editor OR Preview<br>
+            Command palette with <span class="highlight">Cmd+K</span>
+          </div>
+        </div>
+
+        <div class="features">
+          <div class="feature primary">Monaco Editor</div>
+          <div class="feature primary">Auto-save</div>
+          <div class="feature">IndexedDB</div>
+          <div class="feature">Live Preview</div>
+          <div class="feature">Cmd+K</div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="phone-header">
+              <div class="file-tabs">
+                <div class="file-tab">index.html</div>
+                <div class="file-tab inactive">style.css</div>
+              </div>
+              <div class="phone-actions">
+                <div class="action-btn">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+            </div>
+            <div class="phone-body">
+              <div class="code-line"><span class="line-num">1</span><span class="tag">&lt;!DOCTYPE</span> <span class="attr">html</span><span class="tag">&gt;</span></div>
+              <div class="code-line"><span class="line-num">2</span><span class="tag">&lt;html&gt;</span></div>
+              <div class="code-line"><span class="line-num">3</span><span class="tag">&lt;head&gt;</span></div>
+              <div class="code-line"><span class="line-num">4</span>  <span class="tag">&lt;title&gt;</span><span class="text">My App</span><span class="tag">&lt;/title&gt;</span></div>
+              <div class="code-line"><span class="line-num">5</span><span class="tag">&lt;/head&gt;</span></div>
+              <div class="code-line"><span class="line-num">6</span><span class="tag">&lt;body&gt;</span></div>
+              <div class="code-line"><span class="line-num">7</span>  <span class="tag">&lt;h1&gt;</span><span class="text">Hello!</span><span class="tag">&lt;/h1&gt;</span></div>
+              <div class="code-line"><span class="line-num">8</span><span class="tag">&lt;/body&gt;</span></div>
+            </div>
+            <div class="phone-footer">
+              <div class="cmd-hint">
+                <span class="cmd-key">Cmd+K</span>
+                <span>Command palette</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="bottom-text">
+      <div class="tech-item">Next.js</div>
+      <div class="tech-item">Monaco</div>
+      <div class="tech-item">Zustand</div>
+    </div>
+  </div>
+</body>
+</html>
